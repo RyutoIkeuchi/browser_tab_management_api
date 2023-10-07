@@ -5,7 +5,7 @@ from database import Base
 
 class WebPage(Base):
     __tablename__ = 'web_pages'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
     description = Column(String)
     image = Column(String, nullable=True)
@@ -23,13 +23,13 @@ class WebPageSubProperty(Base):
 class MainProperty(Base):
     __tablename__ = 'main_properties'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    web_pages = relationship('WebPage', backref='main_properties')
+    name = Column(String, unique=True)
+    web_page_list = relationship('WebPage', backref='main_properties')
     sub_property_list = relationship('SubProperty', backref='main_properties')
     
 class SubProperty(Base):
     __tablename__ = 'sub_properties'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String, unique=True)
     main_property_id = Column(Integer, ForeignKey('main_properties.id'))
     
