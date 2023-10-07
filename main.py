@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
-from database import SessionLocal, engine
+from database import SessionLocal, engine, get_db
+import models, schemas, crud
 
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -18,3 +21,8 @@ app.add_middleware(
 @app.get('/')
 def read_root():
     return {"Hello": "World"}
+
+@app.get('/web-page/', response_model=list[schemas.WebPage])
+def read_web_page_list(db: Session = Depends(get_db)):
+    response = crud.get_web_page_list(db)
+    return response
