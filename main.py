@@ -26,3 +26,8 @@ def read_root():
 def read_web_page_list(db: Session = Depends(get_db)):
     response = crud.get_web_page_list(db)
     return response
+
+@app.post('/web-page/', response_model=schemas.WebPage)
+def create_web_page(web_page: schemas.WebPageCreate, db: Session = Depends(get_db)):
+    response = crud.post_web_page(db, web_page)
+    return response

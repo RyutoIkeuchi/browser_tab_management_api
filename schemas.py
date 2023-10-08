@@ -18,14 +18,13 @@ class WebPageBase(BaseModel):
     image: Union[str, None] = None
     url: str
     main_property_id: int
-    sub_property_list: list[SubProperty] = []
 
 class WebPageCreate(WebPageBase):
-    pass
+    sub_property_id_list: list[int] = []
 
 class WebPage(WebPageBase):
     id: int
-    
+    sub_property_list: list[SubProperty] = []
     class Config:
         orm_mode = True
 
