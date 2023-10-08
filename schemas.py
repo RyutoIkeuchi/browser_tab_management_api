@@ -41,11 +41,14 @@ class WebPageSubProperty(WebPageSubPropertyBase):
 
 class MainPropertyBase(BaseModel):
     name: str
-    web_page_list: list[WebPage] = []
-    sub_property_list: list[SubProperty] = []
+    
+class MainPropertyCreate(MainPropertyBase):
+    pass
 
 class MainProperty(MainPropertyBase):
     id: int
+    web_page_list: list[WebPage] = []
+    sub_property_list: list[SubProperty] = []
     
     class Config:
         orm_mode = True
