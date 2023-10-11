@@ -3,12 +3,13 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from database import SessionLocal, engine, get_db
 import models, schemas, crud
-from routers import main_property
+from routers import main_property, web_page
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.include_router(main_property.router)
+app.include_router(web_page.router)
 
 origins = ["*"]
 
@@ -23,13 +24,3 @@ app.add_middleware(
 @app.get('/')
 def read_root():
     return {"Hello": "World"}
-
-@app.get('/web-page/', response_model=list[schemas.WebPage])
-def read_web_page_list(db: Session = Depends(get_db)):
-    response = crud.get_web_page_list(db)
-    return response
-
-@app.post('/web-page/', response_model=schemas.WebPage)
-def create_web_page(web_page: schemas.WebPageCreate, db: Session = Depends(get_db)):
-    response = crud.post_web_page(db, web_page)
-    return response
