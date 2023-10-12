@@ -3,13 +3,14 @@ from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from database import SessionLocal, engine, get_db
 import models, schemas, crud
-from routers import main_property, web_page
+from routers import main_property, web_page, sub_property
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-app.include_router(main_property.router)
 app.include_router(web_page.router)
+app.include_router(main_property.router)
+app.include_router(sub_property.router)
 
 origins = ["*"]
 

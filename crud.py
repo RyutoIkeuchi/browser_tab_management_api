@@ -17,3 +17,10 @@ def post_main_property(db: Session, main_property: schemas.MainPropertyCreate):
     db.commit()
     db.refresh(db_main_property)
     return db_main_property
+
+def post_sub_property(db: Session, sub_property: schemas.SubPropertyCreate):
+    db_sub_property = models.SubProperty(name=sub_property.name, main_property_id=sub_property.main_property_id)
+    db.add(db_sub_property)
+    db.commit()
+    db.refresh(db_sub_property)
+    return db_sub_property
