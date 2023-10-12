@@ -11,6 +11,9 @@ def post_web_page(db: Session, web_page: schemas.WebPageCreate):
     db.refresh(db_web_page)
     return db_web_page
 
+def get_main_property_list(db: Session):
+    return db.query(models.MainProperty).all()
+
 def post_main_property(db: Session, main_property: schemas.MainPropertyCreate):
     db_main_property = models.MainProperty(name=main_property.name)
     db.add(db_main_property)
