@@ -1,20 +1,8 @@
 from pydantic import BaseModel        
 from typing import Union
+from schemas.sub_property import SubProperty
 
-class SubPropertyBase(BaseModel):
-    name: str
-    main_property_id: int
-    
-class SubPropertyCreate(SubPropertyBase):
-    pass
-    
-class SubProperty(SubPropertyBase):
-    id: int
-    
-    class Config:
-        orm_mode = True
-        
-        
+
 class WebPageBase(BaseModel):
     title: str
     description: str
@@ -37,21 +25,6 @@ class WebPageSubPropertyBase(BaseModel):
     
 class WebPageSubProperty(WebPageSubPropertyBase):
     id: int
-    
-    class Config:
-        orm_mode = True
-        
-
-class MainPropertyBase(BaseModel):
-    name: str
-    
-class MainPropertyCreate(MainPropertyBase):
-    pass
-
-class MainProperty(MainPropertyBase):
-    id: int
-    web_page_list: list[WebPage] = []
-    sub_property_list: list[SubProperty] = []
     
     class Config:
         orm_mode = True
